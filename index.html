@@ -1,41 +1,101 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
+<html lang="en">
 
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Google Map</title>
 
-  <body>
-    <div id="map"></div>
+    <!-- materialize icons, css & js -->
+    <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" href="/css/styles.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/ui.js"> defer </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFE1C4">
+</head>
+
+<body class="grey lighten-4">
+
+    <!-- top nav -->
+    <nav class="z-depth-0">
+        <div class="nav-wrapper container">
+            <a href="/">KTH Navigation<span> Map</span></a>
+            <span class="left grey-text text-darken-1">
+                <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+            </span>
+        </div>
+    </nav>
+
+    <!-- side nav -->
+    <ul id="side-menu" class="sidenav side-menu">
+        <li><a class="subheader">KTH Navigation Map</a></li>
+        <li><a href="/" class="waves-effect">Home</a></li>
+        <li><a href="/pages/about.html" class="waves-effect">About</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="/pages/contact.html" class="waves-effect">
+                <i class="material-icons">mail_outline</i>Contact</a>
+        </li>
+    </ul>
+
+    <div class="container grey-text text-darken-1" id='map'></div>
+    <div>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="roadmap">map</button>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="satellite">satellite</button>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="terrain">terrain</button>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="my_loc">my_location</button>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="fullScreen">zoom_out_map</button>
+        <button class="mdc-icon-button material-icons " style="visibility:hidden" id="streetview">streetview</button>
+        <!--<button class="mdc-icon-button-small material-icons" id="person_pin_circle">person_pin_circle</button> -->
+    </div>
+
+    <nav class="z-depth-1">
+        <div class="nav-wrapper container">
+            <ul>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.3498092, 18.0684758), 0)">favorite</i></a></li>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.314623, 18.074855), 1)">favorite</i></a></li>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.404990, 17.949800), 2)">favorite</i></a></li>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.326950, 18.071789), 3)">favorite</i></a></li>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.308019, 18.075904), 4)">favorite</i></a></li>
+                <li><a href="#"><i class="material-icons "
+                            onclick="addMarker(new google.maps.LatLng(59.315250, 18.070703), 5)">favorite</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-firestore.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
+
     <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 59.3498092, lng: 18.0684758 },
-          zoom: 16
-        });
-      }
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB-5x1sR4jmARuLSJxkXLYFj1IC-_L2C-o",
+            authDomain: "kth-lab-1-map.firebaseapp.com",
+            databaseURL: "https://kth-lab-1-map.firebaseio.com",
+            projectId: "kth-lab-1-map",
+            storageBucket: "kth-lab-1-map.appspot.com",
+            messagingSenderId: "430014844866",
+            appId: "1:430014844866:web:c53c8f2665fefda633d05b",
+            measurementId: "G-ZGNS6979ZN"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
     </script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBl3gdhJExA9qRK_Jj5h-letdq7AMW88P8&callback=initMap"
-      async
-      defer
-    ></script>
-  </body>
+
+    <script src="/js/app.js"></script>
+</body>
+
 </html>

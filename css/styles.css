@@ -1,0 +1,29 @@
+#map {
+    height: 82%;
+    width: 100%;
+   }
+
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+
+.z-depth-0 {
+    height: 10%;
+    width: 100%;
+}
+
+.z-depth-1 {
+    height: 8%;
+    width: 100%;
+}
+
+#fav-add {
+    align-self: center;
+}
